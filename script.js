@@ -1,10 +1,17 @@
-const myLibrary = [];
+let myLibrary = [];
 
 const newBookDialog = document.querySelector("#newBookDialog")
 const newBookForm = document.querySelector("#newBookForm")
 const dialogCloseButton = document.querySelector("#dialogButton")
 
-newBookDialog.addEventListener("close", (event) => {
+// add some dummy values as en example
+addBookToLibrary("A book", "An author", 393, true)
+addBookToLibrary("Another book", "Another author", 1393, true)
+
+// render values on page load
+renderTable()
+
+newBookDialog.addEventListener("close", () => {
   // always clear form when dialog is closed (cancel or submit)
   newBookForm.reset()
 })
@@ -13,14 +20,13 @@ newBookForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const formData = new FormData(event.target);
   const newBookData = Object.fromEntries(formData);
-  const book = {title: newBookData.title, author: newBookData.author, pages: newBookData.pages, read: `${newBookData.read == "on" ? true : false}`}
-  
-  myLibrary.push(book)
+
+  const bookRead = newBookData.read == "on" ? true : false
+  addBookToLibrary(newBookData.title, newBookData.author, parseInt(newBookData.pages), bookRead )
+
   renderTable()
   newBookDialog.close();
 });
-
-
 
 function Book(title, author, pages, read) {
   if (!new.target) {
@@ -41,18 +47,16 @@ function addBookToLibrary(title, author, pages, read) {
   myLibrary.push(newBook);
 }
 
-
-
-let bookA = {title: "A book", author: "An author", pages: 393, read: true}
-let bookB = {title: "Another book", author: "Another author", pages: 1393, read: false}
-
-myLibrary.push(bookA)
-myLibrary.push(bookB)
+function deleteBookFromLibrary(id) {
+  myLibrary = myLibrary.filter((book) => book.id !== id)
+}
 
 function renderTable() {
   const table = document.getElementById("bookTable").getElementsByTagName('tbody')[0]
 
   table.innerHTML = "";
+
+  console.log(myLibrary)
 
   myLibrary.forEach((item) => {
       const row = table.insertRow()
@@ -68,8 +72,20 @@ function renderTable() {
 
       const readCell = row.insertCell();
       readCell.innerText = item.read;
+
+      const deleteCell = row.insertCell();
+
+      const deleteButton = document.createElement("button");
+
+      deleteButton.addEventListener("click", (event) => {
+        deleteBookFromLibrary(event.target.value)
+        renderTable()
+      })
+      deleteButton.innerText = "Delete"
+      deleteButton.value = item.id;
+      deleteCell.appendChild(deleteButton)
+
     }
   )
 }
 
-renderTable()
