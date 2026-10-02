@@ -10,30 +10,82 @@ body {
   padding: 0px;
 }
 
+h1 {
+  margin-top: 2rem;
+}
+
+th,
+td {
+  padding: 0.6em;
+}
+
+tr :nth-child(1),
+tr :nth-child(2) {
+  text-align: left;
+  width: 20%;
+}
+
+tr :nth-child(3) {
+  text-align: right;
+  width: 5%;
+}
+
+tr :nth-child(4) {
+  text-align: center;
+  width:0%;
+}
+
+tr :nth-child(5) {
+  text-align: center;
+  width: 8%;
+  button {
+    width: fit-content;
+    margin-left: 1rem;
+  }
+}
+
+thead {
+  border-bottom: 1px solid grey;
+}
+
 input[type="checkbox"] {
   vertical-align: text-bottom;
 }
 
 #bookTable {
-  flex: 0 1 auto;
-  width: 700px;
+  table-layout: fixed;
+  width: 90%;
+  margin: 10px auto;
+  border-collapse: collapse;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+}
+
+caption {
+  padding: 1em;
+  font-style: italic;
+  caption-side: bottom;
+  letter-spacing: 1px;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: whitesmoke;
 }
 
 button {
   padding: 5px 10px;
   margin: 5px;
-  background-color: lightblue;
+  background-color: skyblue;
   border-radius: 10px;
   box-shadow: 1px 1px 3px 1px darkblue;
   border: none;
-
 }
 
 
 #newBookDialog {
   margin: 30vh auto auto auto;
   padding: 10px;
-  background-color: greenyellow;
+  background-color: mediumspringgreen;
   input {
     padding: 0.2em;
   }
@@ -44,11 +96,9 @@ button {
   
 }
 
-
 #newBookDialog::backdrop {
   background-color: rgb(255 255 255 / 75%);
 }
-
 
 .readStatus:hover, button {
   cursor: pointer;
