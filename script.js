@@ -5,8 +5,8 @@ const newBookForm = document.querySelector("#newBookForm")
 const dialogCloseButton = document.querySelector("#dialogButton")
 
 // add some dummy values as en example
-addBookToLibrary("A book", "An author", 393, true)
-addBookToLibrary("Another book", "Another author", 1393, true)
+addBookToLibrary("A Book", "An Author", 393, true)
+addBookToLibrary("Another Book", "Another Author", 1393, true)
 
 // render values on page load
 renderTable()
@@ -42,13 +42,25 @@ function Book(title, author, pages, read) {
   };
 }
 
+Book.prototype.changeRead = function () {
+  this.read = this.read === true ? false : true;
+}
+
 function addBookToLibrary(title, author, pages, read) {
   const newBook = new Book(title, author, pages, read)
   myLibrary.push(newBook);
 }
 
 function deleteBookFromLibrary(id) {
-  myLibrary = myLibrary.filter((book) => book.id !== id)
+  myLibrary = myLibrary.filter((book) => book.id !== id);
+}
+
+function updateBookFromLibrary (bookId) {
+  console.log(bookId)
+  const bookToUpdate = myLibrary.find(({id}) => id === bookId)
+
+  console.log(bookToUpdate)
+  bookToUpdate.changeRead()
 }
 
 function renderTable() {
@@ -56,10 +68,8 @@ function renderTable() {
 
   table.innerHTML = "";
 
-  console.log(myLibrary)
-
   myLibrary.forEach((item) => {
-      const row = table.insertRow()
+      const row = table.insertRow();
 
       const titleCell = row.insertCell();
       titleCell.innerText = item.title;
@@ -71,20 +81,25 @@ function renderTable() {
       pagesCell.innerText = item.pages;
 
       const readCell = row.insertCell();
-      readCell.innerText = item.read;
+      readCell.className = "readStatus";
+      readCell.innerText = item.read == true ? "\u2705" :  "\u274C";
+      readCell.addEventListener("click", (event) => {
+        updateBookFromLibrary(event.target.parentNode.lastChild.innerText);
+        renderTable();
+      })
+      readCell.title = "Click to Change Status"
 
       const deleteCell = row.insertCell();
-
       const deleteButton = document.createElement("button");
-
       deleteButton.addEventListener("click", (event) => {
-        deleteBookFromLibrary(event.target.value)
-        renderTable()
+        deleteBookFromLibrary(event.target.parentNode.parentNode.lastChild.innerText);
+        renderTable();
       })
-      deleteButton.innerText = "Delete"
-      deleteButton.value = item.id;
-      deleteCell.appendChild(deleteButton)
+      deleteButton.innerText = "Delete";
+      deleteCell.appendChild(deleteButton);
 
+      const idCell = row.insertCell();
+      idCell.innerText = item.id;
     }
   )
 }

@@ -48,3 +48,12 @@ button {
 #newBookDialog::backdrop {
   background-color: rgb(255 255 255 / 75%);
 }
+
+
+.readStatus:hover, button {
+  cursor: pointer;
+}
+
+.hiddenColumn {
+  visibility: collapse;
+}
