@@ -1,5 +1,31 @@
 const myLibrary = [];
 
+const newBookDialog = document.querySelector("#newBookDialog")
+const newBookForm = document.querySelector("#newBookForm")
+
+const dialogCloseButton = document.querySelector("#dialogButton")
+
+newBookDialog.addEventListener("close", (event) => {
+  // always clear form when dialog is closed (cancel or submit)
+  event.target.querySelector("form").reset()
+})
+
+newBookForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const formData = new FormData(event.target);
+
+  const newBookData = Object.fromEntries(formData);
+
+  const book = {title: newBookData.title, author: newBookData.author, pages: newBookData.pages, read: `${newBookData.read == "on" ? true : false}`}
+  
+  myLibrary.push(book)
+  renderTable()
+  newBookDialog.close();
+});
+
+
+
 function Book(title, author, pages, read) {
   if (!new.target) {
     throw Error("You must use the 'new' operator to call the constructor");
@@ -30,6 +56,8 @@ myLibrary.push(bookB)
 function renderTable() {
   const table = document.getElementById("bookTable").getElementsByTagName('tbody')[0]
 
+  table.innerHTML = "";
+
   myLibrary.forEach((item) => {
       const row = table.insertRow()
 
@@ -44,10 +72,8 @@ function renderTable() {
 
       const readCell = row.insertCell();
       readCell.innerText = item.read;
-      
     }
   )
-
 }
 
 renderTable()

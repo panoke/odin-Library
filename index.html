@@ -6,22 +6,25 @@
     <title>TOP - Library</title>
     <script src="script.js" defer></script>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:;base64,=">
 </head>
 <body>
 
     <h1 id="title">TOP - Project: Library</h1>
-    <button id="addBook" command="show-modal" commandfor="newBook">Add Book</button>
-    <dialog id="newBook" closedby="any">
-        <p>Specify Details of New Book - Click outside to close.</p>
-        <label for="author">Author</label>
-        <input type="text" id="author" name="author">
-        <label for="title">Title</label>
-        <input type="text" id="title" name="title">
-        <label for="pages">Number of Pages</label>
-        <input type="number" id="pages" name="pages">
-        <label for="read">Read</label>
-        <input type="checkbox" name="read" id="read">
-        <button commandfor="newBook" command="close">Submit</button>
+    <button id="addBookButtton" command="show-modal" commandfor="newBookDialog">Add Book</button>
+    <dialog id="newBookDialog" closedby="any">
+        <form method="dialog" id="newBookForm">
+            <h4>Specify Details of New Book (click outside to cancel)</h4>
+            <label for="author">Author</label>
+            <input type="text" id="author" name="author" required title="Enter name of Author.">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" required title="Enter title of Book."">
+            <label for="pages">Number of Pages</label>
+            <input type="number" id="pages" name="pages" required min="0" title="Enter Book number of Pages.">
+            <label for="read">Read</label>
+            <input type="checkbox" name="read" id="read">
+            <button id="dialogButton" type="submit">Add</button>
+        </form>
     </dialog>
 
     <table id="bookTable">

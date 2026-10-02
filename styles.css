@@ -5,7 +5,46 @@ body {
   align-items: center;
 }
 
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+input[type="checkbox"] {
+  vertical-align: text-bottom;
+}
+
 #bookTable {
   flex: 0 1 auto;
   width: 700px;
+}
+
+button {
+  padding: 5px 10px;
+  margin: 5px;
+  background-color: lightblue;
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px 1px darkblue;
+  border: none;
+
+}
+
+
+#newBookDialog {
+  margin: 30vh auto auto auto;
+  padding: 10px;
+  background-color: greenyellow;
+  input {
+    padding: 0.2em;
+  }
+
+  h4 {
+   margin-bottom: 1em;
+  }
+  
+}
+
+
+#newBookDialog::backdrop {
+  background-color: rgb(255 255 255 / 75%);
 }
