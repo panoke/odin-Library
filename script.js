@@ -2,21 +2,17 @@ const myLibrary = [];
 
 const newBookDialog = document.querySelector("#newBookDialog")
 const newBookForm = document.querySelector("#newBookForm")
-
 const dialogCloseButton = document.querySelector("#dialogButton")
 
 newBookDialog.addEventListener("close", (event) => {
   // always clear form when dialog is closed (cancel or submit)
-  event.target.querySelector("form").reset()
+  newBookForm.reset()
 })
 
 newBookForm.addEventListener("submit", (event) => {
   event.preventDefault();
-
   const formData = new FormData(event.target);
-
   const newBookData = Object.fromEntries(formData);
-
   const book = {title: newBookData.title, author: newBookData.author, pages: newBookData.pages, read: `${newBookData.read == "on" ? true : false}`}
   
   myLibrary.push(book)
